@@ -24,32 +24,45 @@ export class LinkedList<T> {
   /**
    * Instantiate a new linked list
    */
-  constructor() {
+  constructor(...values: T[]) {
+    // Empty linked list
     this.head = null;
     this.tail = null;
     this.length = 0;
+
+    // Push values to list
+    this.push(...values);
   }
 
   /**
-   * Add a new value to the end of the linked list
+   * Get the current linked list size
    */
-  public push(value: T): void {
-    // Create node
-    const node: LinkedListNode<T> = new LinkedListNode<T>(value);
-
-    // Add first/subsequent node
-    if (!this.head) this.head = node;
-    else this.tail.next = node;
-
-    // Update tail
-    this.tail = node;
-
-    // Increment length
-    this.length++;
+  public get size(): number {
+    return this.length;
   }
 
   /**
-   * Remove the last item from the linked list and return it
+   * Add new value(s) to the end of the linked list
+   */
+  public push(...values: T[]): void {
+    values.forEach(value => {
+      // Create node
+      const node: LinkedListNode<T> = new LinkedListNode<T>(value);
+
+      // Add first/subsequent node
+      if (!this.head) this.head = node;
+      else this.tail.next = node;
+
+      // Update tail
+      this.tail = node;
+
+      // Increment length
+      this.length++;
+    });
+  }
+
+  /**
+   * Remove the last item from the list and return it
    */
   public pop(): T {
     // Pop
@@ -113,13 +126,6 @@ export class LinkedList<T> {
 
     // Decrement length
     this.length--;
-  }
-
-  /**
-   * Get the current linked list size (length)
-   */
-  public size(): number {
-    return this.length;
   }
 
   /**
